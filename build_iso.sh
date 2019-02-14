@@ -17,3 +17,15 @@ function mount-chroot () {
     mount -o bind /dev explained_iso/dev
     mount -t devpts pts explained_iso/dev/pts
 }
+
+function iso-uefi () {
+    md5sum $(find -follow -type f) > md5sum.txt
+    xorriso -as mkisofs -iso-level 3 -full-iso9660-filenames \
+	    -eltorito-boot isolinux/isolinux.bin \
+	    -eltorito-catalog isolinux/boot.cat -no-emul-boot \
+	    -boot-load-size 4 -boot-info-table \
+	    -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
+	    -eltorito-alt-boot -e boot/grub/efi.img \
+	    -no-emul-boot -isohybrid-gpt-basdat \
+	    -output output_uefi.iso .
+}
