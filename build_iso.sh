@@ -29,3 +29,11 @@ function iso-uefi () {
 	    -no-emul-boot -isohybrid-gpt-basdat \
 	    -output output_uefi.iso .
 }
+
+function iso-legacy () {
+    md5sum $(find -follow -type f) > md5sum.txt
+    xorriso -as mkisofs -R -r -J -joliet-long -l -cache-inodes \
+	    -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin -partition_offset 16 \
+	    -A "Personal ISO GNU/Linux" -b isolinux/isolinux.bin -c isolinux/boot.cat \
+	    -no-emul-boot -boot-load-size 4 -boot-info-table -o output.iso .
+}
