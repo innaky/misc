@@ -37,3 +37,9 @@ function iso-legacy () {
 	    -A "Personal ISO GNU/Linux" -b isolinux/isolinux.bin -c isolinux/boot.cat \
 	    -no-emul-boot -boot-load-size 4 -boot-info-table -o output.iso .
 }
+
+function unsquashfs-iso () {
+    unsquashfs -f -d $DIR_DESTINY ${MOUNT_ISO_DIR}/live/filesystem.squashfs
+    rm ${MOUNT_ISO_DIR}/live/filesystem.squashfs
+    sync
+}
