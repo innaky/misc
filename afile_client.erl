@@ -1,5 +1,5 @@
 -module(afile_client).
--export([ls/1, get_file/2]).
+-export([ls/1, get_file/2, new_dir/2]).
 
 ls(Server) ->
     Server ! {self(), list_dir},
@@ -13,4 +13,12 @@ get_file(Server, File) ->
     receive
 	{Server, Content} ->
 	    Content
+    end.
+
+%% make a newdirectory
+new_dir(Server, Makedir) ->
+    Server ! {self(), {make_directory, Makedir}},
+    receive
+	{Server, Namedir} ->
+	    Namedir
     end.

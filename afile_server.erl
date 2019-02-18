@@ -10,6 +10,9 @@ loop(Dir) ->
 	    Client ! {self(), file:list_dir(Dir)};
 	{Client, {get_file, File}} ->
 	    Full = filename:join(Dir, File),
-	    Client ! {self(), file:read_file(Full)}
+	    Client ! {self(), file:read_file(Full)};
+        %% new_directory logic
+	{Client, {make_directory, Makedir}} ->
+	    Client ! {self(), file:make_dir(Makedir)}
     end,
     loop(Dir).
