@@ -1,5 +1,7 @@
 -module(recursion).
--export([fact/1, factmatch/1, my_length/1, tail_fact/1, tail_len/1, repeat/2, tail_repeat/2, reverse/1, tail_reverse/1, tail_reverser/1, sublist/2, tail_sublist/2, zip/2, tail_zip/2, partition/4, quicksort/1]).
+-export([fact/1, factmatch/1, my_length/1, tail_fact/1, tail_len/1]).
+-export([repeat/2, tail_repeat/2, reverse/1, tail_reverse/1, tail_reverser/1, sublist/2, tail_sublist/2]).
+-export([zip/2, tail_zip/2, partition/4, quicksort/1]).
 
 fact(X) when X == 0 ->
     1;
