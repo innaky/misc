@@ -98,3 +98,26 @@ fold(_, InitValue, [])->
     InitValue;
 fold(F, InitValue, [H|T]) ->
     fold(F, F(H,InitValue), T).
+
+%% If the acumulator function is a list you can build hof using
+%% fold, because fold is an universal abstraction
+
+%%% The internal function (anonymous function) is the base case
+%%% it only applies to the `Head` of the `List`, the `Tail` is
+%%% acumulated in the empthy list [].
+reverse(List) ->
+    fold(fun(X, Acc) -> [X|Acc] end, [], List).
+
+map2(Func, Lst) ->
+    reverse(fold(fun(X, Acc) -> [Func(X)|Acc] end, [], Lst).
+
+filter2(Pred, Lst) ->
+    F = fun(X, Acc) ->
+		case Pred(X) of
+		    true ->
+			[X|Acc];
+		    false ->
+			Acc
+		end
+	end,
+    reverse(fold(F, [], L)).
