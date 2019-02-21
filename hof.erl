@@ -1,6 +1,6 @@
 -module(hof).
 -export([increment/1, increment_t/1, decrement/1, decrement_t/1, addone/1, lessone/1]).
--export([map/2]).
+-export([map/2, even/1, old_woman/1, filter/2, maxm/1, sum/1, fold/3]).
 
 increment([]) ->
     [];
@@ -37,3 +37,64 @@ addone(Num) ->
 
 lessone(Num) ->
     Num - 1.
+
+%% Anonymous functions
+%% Now i have more power
+%% hof:map(fun(X) -> X +1 end, [34,13,67,15,27,26]).
+
+%% Only even numbers
+even(List) ->
+    even(List, []).
+even([], Acc) ->
+    Acc;
+%% Predicate
+even([H|T], Acc) when H rem 2 == 0 ->
+    even(T, Acc++[H]);
+%% next value (normal recursion)
+even([_|T], Acc) ->
+    even(T, Acc).
+
+%% Only > 60 years
+old_woman(List) ->
+    old_woman(List, []).
+old_woman([], Acc) ->
+    Acc;
+%% Person = Head, People = Tail
+old_woman([Person = {female, Age}|People], Acc) when Age > 60 ->
+    old_woman(People, [Person|Acc]);
+old_woman([_|People], Acc) ->
+    old_woman(People, Acc).
+
+filter(Pred, List) ->
+    lists:reverse(filter(Pred, List, [])).
+filter(_, [], Acc) ->
+    Acc;
+filter(Pred, [H|T], Acc) ->
+    case Pred(H) of
+	true ->
+	    filter(Pred, T, [H|Acc]);
+	false ->
+	    filter(Pred, T, Acc)
+    end.
+
+%% maximum value of a list
+maxm([H|T]) ->
+    maxm2(T, H).
+maxm2([], MaxVal) ->
+    MaxVal;
+maxm2([H|T], MaxVal) when H > MaxVal ->
+    maxm2(T, H);
+maxm2([_|T], MaxVal) ->
+    maxm2(T, MaxVal).
+
+sum(List) ->
+    sum(List, 0).
+sum([], Acc) ->
+    Acc;
+sum([H|T], Acc) ->
+    sum(T, Acc+H).
+
+fold(_, InitValue, [])->
+    InitValue;
+fold(F, InitValue, [H|T]) ->
+    fold(F, F(H,InitValue), T).
