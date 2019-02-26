@@ -18,7 +18,7 @@ fridge1() ->
 %% server
 
 start2(FoodList) ->
-    spawn(kitchen, fridge2, [[FoodList]]).
+    spawn(kitchen, fridge2, [FoodList]).
 
 fridge2(FoodList) ->
     receive
