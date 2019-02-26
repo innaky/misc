@@ -52,6 +52,8 @@ store(Pid, Food) ->
     receive
 	{Pid, Msg} ->
 	    Msg
+    after 3000 ->
+	timeout
     end.
 
 %% take a food
@@ -60,6 +62,8 @@ take(Pid, Food) ->
     receive
 	{Pid, Msg} ->
 	    Msg
+    after 30000 ->
+        timeout
     end.
 
 %% list all food
@@ -68,4 +72,6 @@ list_products(Pid) ->
     receive
 	{Pid, Msg} ->
 	    Msg
+    after 3000 ->
+        timeout
     end.
