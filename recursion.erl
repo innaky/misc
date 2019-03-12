@@ -1,7 +1,7 @@
 -module(recursion).
 -export([fact/1, factmatch/1, my_length/1, tail_fact/1, tail_len/1]).
 -export([repeat/2, tail_repeat/2, reverse/1, tail_reverse/1, tail_reverser/1, sublist/2, tail_sublist/2]).
--export([zip/2, tail_zip/2, partition/4, quicksort/1]).
+-export([zip/2, tail_zip/2, partition/4, quicksort/1, my_map/2]).
 
 fact(X) when X == 0 ->
     1;
@@ -109,3 +109,8 @@ quicksort([]) ->
 quicksort([Pivot|T]) ->
     {Smaller, Larger} = partition(Pivot, T, [], []),
     quicksort(Smaller) ++ [Pivot] ++ quicksort(Larger).
+
+my_map(_, []) ->
+    [];
+my_map(F, [H|T]) ->
+    [F(H) | my_map(F, T)].
