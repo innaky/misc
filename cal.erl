@@ -1,6 +1,6 @@
 -module(cal).
--export([start/0, server/0]).
--export([triangle_area/2, rectangle/2]).
+-export([start/0, server/0, ask/2]).
+-export([triangle_area/2, rectangle/2]). %% for independent computing with triangle_area and rectangle
 
 start() ->
     spawn(?MODULE, server, []).
@@ -14,6 +14,9 @@ start() ->
 %% This is because there are child processes (which have different "Pid")
 %%   and because communication between the processes is like sending letters,
 %%   you need a recipient address and who sends it.
+
+ask(Pid, Ask) ->
+    client(Pid, Ask).
 
 client(Pid, Request) ->
     Pid ! {self(), Request},
@@ -41,7 +44,7 @@ triangle_area(Base, Height) ->
 rectangle(Long, Width) ->
     Long * Width.
 
-%% Pid1 = start().
-%% cal:client(Pid1, {triangle, 2, 3}).
-%% cal:client(Pid1, {rectangle, 4, 2}).
-%% cal:client(Pid1, {circle, 33}).
+%% Pid1 = cal:start().
+%% cal:ask(Pid1, {triangle, 2, 3}).
+%% cal:ask(Pid1, {rectangle, 4, 2}).
+%% cal:ask(Pid1, {circle, 33}).
