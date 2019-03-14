@@ -41,5 +41,7 @@ triangle_area(Base, Height) ->
 rectangle(Long, Width) ->
     Long * Width.
 
-%% Pid = spawn(cal, server, []).
-%% Pid ! {triangle, 2, 5}.
+%% Pid1 = start().
+%% cal:client(Pid1, {triangle, 2, 3}).
+%% cal:client(Pid1, {rectangle, 4, 2}).
+%% cal:client(Pid1, {circle, 33}).
