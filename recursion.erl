@@ -114,3 +114,13 @@ my_map(_, []) ->
     [];
 my_map(F, [H|T]) ->
     [F(H) | my_map(F, T)].
+
+%    (defun my-map (fn lst)
+%      (if (equal lst nil)
+%	  nil
+%	  (cons (funcall fn (car lst))
+%		(my-map fn (cdr lst)))))
+%
+%    (my-map #'(lambda (x)
+%		(* x x)) '( 1 2 3))
+%    => (1 4 9)
