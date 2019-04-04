@@ -31,3 +31,16 @@ loop() ->
 	    From ! {kvs, get(Key)},
 	    loop()
     end.
+
+% 1> c(simple_server).
+% {ok,simple_server}
+% 2> simple_server:start().
+% true
+% 3> simple_server:st
+% start/0  store/2
+% 3> simple_server:store({name, innaky}, "my_name").
+% true
+% 4> simple_server:lookup({name, innaky}).
+% {ok,"my_name"}
+% 5> simple_server:lookup({name, other_name}).
+% undefined
