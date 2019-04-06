@@ -1,8 +1,8 @@
 -module(myftp).
--export([get_file/1]).
+-export([get_file/2]).
 
 get_file(RemotePC, F) ->
-    {ok, Bin} = rpc:call(RemotePc, file, read_file, [F]),
+    {ok, Bin} = rpc:call(RemotePC, file, read_file, [F]),
     file:write_file(F ++ ".copy", [Bin]).
 
 %% The remote pc is: server@innaky
