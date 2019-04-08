@@ -1,5 +1,5 @@
 -module(myftp1).
--export([get_file/2]).
+-export([get_file/2, read_step/1, my_consult/1]).
 
 get_file(RemotePC, File) ->
     {ok, Data} = rpc:call(RemotePC, myftp1, get_file, [RemotePC, File]),
