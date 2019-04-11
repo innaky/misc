@@ -1,6 +1,6 @@
 -module(myftp1).
 
--export([get_file/2, segments/3, sustainable_copy/1, read_step/1]).
+-export([get_file/2, segments/3, sustainable_read/1]).
 
 get_file(RemotePC, Filename) ->
     {ok, Fd} = rpc:call(RemotePC, myftp1, sustainable_read, [Filename]),
