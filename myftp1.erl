@@ -1,5 +1,12 @@
 -module(myftp1).
--export([get_file/3, segments/3, sustainable_read/2]).
+-export([get_file/3, segments/3, sustainable_read/2, rget_file/3]).
+
+rget_file(_, _, []) ->
+    [];
+rget_file(RemotePC, Filename, [H|T]) ->
+    [_, _, _, _, Data] = get_file(RemotePC, Filename, H),
+    io:format("~s", [Data]),
+    rget_file(RemotePC, Filename, T).
 
 get_file(RemotePC, Filename, Num) ->
     rpc:call(RemotePC, myftp1, sustainable_read, [Filename, Num]).
