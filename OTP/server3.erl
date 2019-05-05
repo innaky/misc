@@ -1,5 +1,5 @@
 -module(server3).
--export([]).
+-export([star/2, rpc/2, swap_code/2]).
 
 start(Name, Mod) ->
     register(Name, spawn(fun() ->
