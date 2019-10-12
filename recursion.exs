@@ -15,4 +15,9 @@ defmodule Recursion do
   # return a reverse of a list
   def reverse([]), do: []
   def reverse([head|tail]), do: tail ++ [head]
+  
+  # zip two lists
+  def zip(_, []), do: []
+  def zip([], _), do: []
+  def zip([hx|tx], [hy|ty]), do: [{hx, hy}] ++ zip(tx, ty)
 end
