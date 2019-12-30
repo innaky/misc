@@ -16,8 +16,29 @@ An client server architecture
 ok
 ```
 
-- ### Client zone (with GNU/Linux, BSD*)
+- ### Client zone (with netcat)
 ```bash
 echo -n "send data over TCP" | nc 127.0.0.1 5678
 send data over TCP
 ```
+
+# Multi client echo
+
+some clients:
+
+- ### Server zone
+```erlang
+1> c(multi_echo). 
+{ok,multi_echo}
+2> multi_echo:listen(5678).
+```
+
+- ###  Client zone (With netcat)
+```bash
+echo -n "send data over TCP" | nc 127.0.0.1 5678
+send data over TCP
+echo -n "send data over TCP" | nc 10.0.0.107 5678
+send data over TCP
+```
+
+The server not down, its continue running.
