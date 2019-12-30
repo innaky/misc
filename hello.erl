@@ -1,8 +1,16 @@
 -module(hello).
--export([start/0]).
+-export([start/0, loop/0]).
 
 start() ->
-    io:format("Hello world.~n").
+    Pid = spawn(hello, loop, []),
+    Pid ! hello.
+
+loop() ->
+    receive 
+	hello ->
+	    io:format("Hello World!, The Erlang way! :D~n"),
+	    loop()
+    end.
 
 %% For compiling out of shell
 %% $ erl hello.erl
