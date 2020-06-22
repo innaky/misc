@@ -23,4 +23,11 @@ defmodule Recursion do
 
   def sublst([]), do: []
   def sublst([h|t]), do: [[h]|sublst(t)]
+
+  def sum([], total), do: total
+  def sum([h|t], total), do: sum(t, h + total)
+
+  def tail_sum(lst), do: _sum(lst, 0)
+  defp _sum([], total), do: total
+  defp _sum([h|t], total), do: _sum(t, h + total)
 end
