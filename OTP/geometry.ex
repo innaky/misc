@@ -33,7 +33,7 @@ defmodule Geometry do
     long * width
   end
   
-  def start(value) do
+  def start(value \\ nil) do
     GenServer.start_link(__MODULE__, value, name: __MODULE__)
   end
 
