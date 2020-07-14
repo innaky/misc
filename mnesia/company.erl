@@ -1,10 +1,12 @@
 -module(company).
 -include_lib("stdlib/include/qlc.hrl").
--include("company.hrl")
+-include("company.hrl").
 -export([init/0, insert_emp/3, raise/2, included/0]).
 
+% checking the included company.hrl
 included() ->
-    #employee{emp_no=0, name="innaky", salary=0, sex="female", phone=5432, room_no={7,13}}.
+Emp = #employee{emp_no=0, name="innaky", salary=0, sex="female", phone=5432, room_no={7,13}},
+insert_emp(Emp, 'Algorith/Math', [erlang, mnesia, otp, hacking]).
 
 init() ->
     mnesia:create_table(employee, [{attributes, record_info(fields, employee)}]),
@@ -39,4 +41,3 @@ raise(Eno, Raise) ->
 		mnesia:write(New)
 	end,
     mnesia:transaction(F).
-
