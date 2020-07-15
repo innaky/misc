@@ -1,7 +1,7 @@
 -module(company).
 -include_lib("stdlib/include/qlc.hrl").
 -include("company.hrl").
--export([init/0, insert_emp/3, raise/2, included/0]).
+-export([init/0, insert_emp/3, raise/2, included/0, females_mnesia/0, females_qlc/0, raise_females/1]).
 
 % checking the included company.hrl
 included() ->
@@ -32,7 +32,7 @@ make_projs(Emp, [First_Project | Rest_Projects]) ->
     mnesia:write(#in_proj{emp = Emp, proj_name = First_Project}),
     make_projs(Emp, Rest_Projects).
 
-% query
+% update
 raise(Eno, Raise) ->
     F = fun() ->
 		[Em] = mnesia:read(employee, Eno, write),
@@ -41,3 +41,36 @@ raise(Eno, Raise) ->
 		mnesia:write(New)
 	end,
     mnesia:transaction(F).
+
+% mnesia query
+females_mnesia() ->
+    F = fun() ->
+		Female = #employee{sex="female", name='$1', _ = '_'},
+		mnesia:select(employee, [{Female, [], ['$1']}])
+	end,
+    mnesia:transaction(F).
+
+females_qlc() ->
+    F = fun() ->
+		Q = qlc:q([E#employee.name || E <- mnesia:table(employee),
+					      E#employee.sex == "female"]),
+		qlc:e(Q)
+	end,
+    mnesia:transaction(F).
+
+raise_females(Amount) ->
+    F = fun()->
+		Q = qlc:q([E || E <- mnesia:table(employee), 
+                                E#employee.sex == "female"]),
+		Fs = qlc:e(Q),
+		over_write(Fs, Amount)
+	end,
+    mnesia:transaction(F).
+
+over_write([], _) ->
+    0;
+over_write([H|T], Amount) ->
+    Salary = H#employee.salary + Amount,
+    New = H#employee{salary = Salary},
+    mnesia:write(New),
+    1 + over_write(T, Amount).
